@@ -6,6 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>@yield('title')</title>
   <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
     header {
       background-image: linear-gradient(to right, #2af598 0%, #009efd 100%);
       width: 100%;
