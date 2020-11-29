@@ -11,7 +11,11 @@ class MyPageController extends Controller
     public function mypage(Request $request)
     {
         $name = Auth::user()->name;
-        return view('mypage.index', ['name' => $name]);
+        $items = DB::table('comment')
+        ->join('users', 'users.id', '=', 'comment.user_id')
+        ->get();
+
+        return view('mypage.index', ['name' => $name, 'items' => $items]);
     }
 
     public function add(Request $request)
@@ -28,4 +32,5 @@ class MyPageController extends Controller
         DB::table('comment')->insert($comment);
         return redirect('/mypage');
     }
+
 }
