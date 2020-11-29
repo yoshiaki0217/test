@@ -20,3 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/mypage', 'MyPageController@mypage');
+
+Route::get('/mypage/add', 'MyPageController@add');
+Route::post('/mypage/add', 'MyPageController@create');
+
