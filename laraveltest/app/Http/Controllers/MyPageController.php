@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CommentValidate;
 
 class MyPageController extends Controller
 {
@@ -23,7 +24,7 @@ class MyPageController extends Controller
         return view('mypage.add');
     }
 
-    public function create(Request $request)
+    public function create(CommentValidate $request)
     {
         $comment = [
             'user_id' => Auth::id(),
