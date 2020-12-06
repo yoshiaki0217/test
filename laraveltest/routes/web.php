@@ -24,3 +24,9 @@ Route::get('/mypage', 'MyPageController@mypage');
 Route::get('/mypage/add', 'MyPageController@add');
 Route::post('/mypage/add', 'MyPageController@create');
 
+Route::get('/mypage/edit', 'MyPageController@edit');
+Route::post('/mypage/edit', 'MyPageController@create');
+
+Route::get('/mypage/delete', 'MyPageController@delete');
+Route::post('/mypage/delete', 'MyPageController@remove');
+
