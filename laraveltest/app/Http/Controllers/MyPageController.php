@@ -39,36 +39,65 @@ class MyPageController extends Controller
     {
         $items = DB::table('comment')
         ->where('comment.id', $request->id)
-        ->get();
+        ->get()->toArray();
+
+        if($items == null){
+            return redirect('/mypage');
+        }
         
         return view('mypage.edit', ['items' => $items]);
     }
 
     public function update(CommentValidate $request)
     {
-        $param = [
-            'comment' =>$request->comment,
-        ];
-        DB::table('comment')
+        $userId = Auth::user()->id;
+        $commentId = DB::table('comment')
+        ->select('user_id')
         ->where('id', $request->id)
-        ->update($param);
+        ->first();
+
+        if((string)$userId == (string)$commentId->user_id){  
+            $param = [
+                'comment' => $request->comment,
+            ];
+            DB::table('comment')
+            ->where('id', $request->id)
+            ->update($param);
+        }else {
+            return redirect('/mypage');
+        }
+        
         return redirect('/mypage');
     }
 
     public function delete(Request $request)
     {
         $items = DB::table('comment')
-        ->where('comment.id', $request->id)
-        ->get();
+        ->where('id', $request->id)
+        ->get()->toArray();
+
+        if($items == null){
+            return redirect('/mypage');
+        }
         
         return view('mypage.delete', ['items' => $items]);
     }
 
-    public function remove(Request $request)
+    public function remove(CommentValidate $request)
     {
-        DB::table('comment')
+        $userId = Auth::user()->id;
+        $commentId = DB::table('comment')
+        ->select('user_id')
         ->where('id', $request->id)
-        ->delete();
+        ->first();
+
+        if((string)$userId == (string)$commentId->user_id){  
+            DB::table('comment')
+            ->where('id', $request->id)
+            ->delete();
+        }else {
+            return redirect('/mypage');
+        }
 
         return redirect('/mypage');
     }
